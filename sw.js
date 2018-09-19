@@ -35,8 +35,9 @@ self.addEventListener('fetch', e => {
       } else {
         return fetch(e.request)
         .then(response => {
+          const cloneResponse = response.clone();
           caches.open('v1').then(cache => {
-            cache.put(e.request, response);
+            cache.put(e.request, cloneResponse);
           });
           return response;
         });
